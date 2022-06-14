@@ -1,0 +1,76 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "gallia-plugins"
+version = "0.1.0"
+description = "My personal gallia plugins"
+authors = ["Stefan Tatschner <stefan@rumpelsepp.org>"]
+license = "MIT"
+packages = [
+    { include = "galliaplug" },
+]
+
+[tool.poetry.plugins."gallia_scanners"]
+"dnsmasq" = "galliaplug.dnsmasq:DHCPServer"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+gallia = "^1.0.0-alpha.11"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.961"
+pylint = "2.14.1"
+pylsp-mypy = "^0.5.8"
+pylsp-rope = "^0.1.8"
+python-lsp-black = "^1.1.0"
+python-lsp-server = "^1.3.3"
+myst-parser = "^0.18.0"
+
+[tool.mypy]
+strict = true
+
+[tool.black]
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.messages_control]
+disable = [
+    "R0801",
+    "broad-except",
+    "c-extension-no-member",
+    "fixme",
+    "invalid-name",
+    "line-too-long",
+    "missing-class-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "missing-module-docstring",
+    "multiple-statements",
+    "no-else-break",
+    "no-else-continue",
+    "no-else-return",
+    "no-name-in-module",
+    "simplifiable-if-expression",
+    "too-few-public-methods",
+    "too-many-arguments",
+    "too-many-branches",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "too-many-locals",
+    "too-many-nested-blocks",
+    "too-many-public-methods",
+    "too-many-return-statements",
+    "too-many-statements",
+    "unexpected-special-method-signature",
+    "unused-argument",
+    "unused-argument",
+    "use-dict-literal",
+    "use-list-literal",
+]
