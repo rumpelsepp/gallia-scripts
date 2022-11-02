@@ -1,50 +1,47 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "gallia-plugins"
+name = "gallia-scripts"
 version = "0.1.0"
-description = "My personal gallia plugins"
+description = "My personal gallia scripts"
 authors = ["Stefan Tatschner <stefan@rumpelsepp.org>"]
 license = "MIT"
 packages = [
-    { include = "galliaplug" },
+    { include = "gallia_scripts" },
 ]
 
-[tool.poetry.plugins."gallia_scanners"]
-"dnsmasq" = "galliaplug.dnsmasq:DHCPServer"
+[tool.poetry.scripts]
+dnsmasq-wrapper = 'gallia_scripts.dnsmasq:main'
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.11"
-gallia = "^1.0.0-alpha.11"
+python = ">=3.10,<3.12"
+gallia = "^1.1.0b11"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-mypy = "^0.961"
-pylint = "2.14.1"
-pylsp-mypy = "^0.5.8"
-pylsp-rope = "^0.1.8"
-python-lsp-black = "^1.1.0"
-python-lsp-server = "^1.3.3"
-myst-parser = "^0.18.0"
+black = "^22.10"
+flake8 = "^5.0"
+isort = "^5.10"
+mypy = "^0.982"
+pylint = "^2.15.0"
+pylsp-mypy = "^0.6"
+pylsp-rope = "^0.1"
+python-lsp-black = "^1.1"
+python-lsp-server = "^1.5"
 
 [tool.mypy]
 strict = true
 
 [tool.black]
-target-version = ['py39']
+target-version = ['py310']
 
 [tool.isort]
 profile = "black"
 
 [tool.pylint.messages_control]
 disable = [
-    "R0801",
     "broad-except",
-    "c-extension-no-member",
     "fixme",
     "invalid-name",
     "line-too-long",
@@ -68,7 +65,6 @@ disable = [
     "too-many-public-methods",
     "too-many-return-statements",
     "too-many-statements",
-    "unexpected-special-method-signature",
     "unused-argument",
     "unused-argument",
     "use-dict-literal",

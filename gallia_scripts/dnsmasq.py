@@ -1,7 +1,7 @@
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
 from subprocess import run
 
-from gallia.udscan.core import Script
+from gallia.command import Script
 
 
 def run_wrapper(cmd: list[str], sudo: bool = False) -> None:
@@ -52,7 +52,7 @@ def nm_set_managed(iface: str, enabled: bool, *, sudo: bool = False) -> None:
 
 
 class DHCPServer(Script):
-    """This script spawns dnsmasq as a DHCP and DNS server.
+    """Spawns dnsmasq as a DHCP and DNS server.
     Routing and NAT is set up automatically.
     """
 
@@ -145,7 +145,7 @@ class DHCPServer(Script):
         if args.network_manager:
             nm_set_managed(args.iface, True, sudo=args.sudo)
 
-    def _main(self, args: Namespace) -> None:
+    def main(self, args: Namespace) -> None:
         dnsmasq_args = [
             f"--interface={args.interface}",
             "--except-interface=lo",
@@ -166,9 +166,7 @@ class DHCPServer(Script):
 
         run_wrapper(["dnsmasq"] + dnsmasq_args)
 
-    def main(self, args: Namespace) -> None:
-        self.setup(args)
-        try:
-            self._main(args)
-        finally:
-            self.teardown(args)
+
+def main() -> None:
+    parser = ArgumentParser()
+    DHCPServer(parser).entry_point(parser.parse_args())
