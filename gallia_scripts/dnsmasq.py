@@ -7,9 +7,9 @@ from gallia.command import Script
 
 def run_wrapper(cmd: list[str], sudo: bool = False) -> None:
     if sudo:
-        run(cmd, check=True)
-    else:
         run(["sudo"] + cmd, check=True)
+    else:
+        run(cmd, check=True)
 
 
 def nft_enable_nat(*, sudo: bool = False) -> None:
@@ -130,7 +130,7 @@ class DHCPServer(Script):
             nm_set_managed(args.iface, False, sudo=args.sudo)
 
         # Configure ethernet card
-        ip_add_address(args.ip_address, args.iface, sudo=args.sudo)
+        ip_add_address(args.iface, args.ip_address, sudo=args.sudo)
         ip_enable_iface(args.iface, True, sudo=args.sudo)
 
     def teardown(self, args: Namespace) -> None:
@@ -148,7 +148,7 @@ class DHCPServer(Script):
 
     def main(self, args: Namespace) -> None:
         dnsmasq_args = [
-            f"--interface={args.interface}",
+            f"--interface={args.iface}",
             "--except-interface=lo",
             "--bind-interfaces",
             "--dhcp-authoritative",
@@ -165,7 +165,7 @@ class DHCPServer(Script):
         if args.log_dhcp:
             dnsmasq_args.append("--log-dhcp")
 
-        run_wrapper(["dnsmasq"] + dnsmasq_args)
+        run_wrapper(["dnsmasq"] + dnsmasq_args, sudo=args.sudo)
 
 
 def main() -> None:
