@@ -1,3 +1,4 @@
+import sys
 from argparse import ArgumentParser, Namespace
 from subprocess import run
 
@@ -56,7 +57,7 @@ class DHCPServer(Script):
     Routing and NAT is set up automatically.
     """
 
-    def add_parser(self) -> None:
+    def configure_parser(self) -> None:
         dns_group = self.parser.add_mutually_exclusive_group()
         dns_group.add_argument(
             "-d",
@@ -169,4 +170,4 @@ class DHCPServer(Script):
 
 def main() -> None:
     parser = ArgumentParser()
-    DHCPServer(parser).entry_point(parser.parse_args())
+    sys.exit(DHCPServer(parser).entry_point(parser.parse_args()))
